@@ -1,10 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Card , Input , Button , Row , Col , Form , Layout  } from 'antd';
-
-const { Header , Content , Footer } = Layout;
+import * as Component from '../Components/index';
+import { Card , Input , Button , Row , Col , Form } from 'antd';
+import { login } from '../Models/Models'
 
 class Login extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            user:'User'
+        }
+    }
 
 
     //handle login submit
@@ -12,39 +18,16 @@ class Login extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
-            console.log('Received values of form: ', values);
+            login(values);
           }
         });
     }
 
-
-    //render the heading of the page
-    renderHeading = () => {
-        return(
-            <Card className="heading">ChatApp</Card>
-        )
+    //render content about the App
+    renderContent = () => {
+        return(<Card>Content About App</Card>)
     }
 
-    //render the greeting message
-    renderGreeting = () => {
-        let d = new Date();
-        let time = d.getHours();
-        let greeting = ''
-        if(time>=0 && time<12){
-            greeting = 'Morning';
-        }
-        else if(time>=12 &&  time<17)
-        {
-            greeting = 'Afternoon'
-        }
-        else
-        {
-            greeting = 'Evening'
-        }
-        return(
-            <Card bordered={false} className="greeting">Good {greeting} !</Card>
-        )
-    }
     //render the login form
     renderForm = () => {
         const { getFieldDecorator } = this.props.form;       
@@ -54,19 +37,19 @@ class Login extends React.Component{
                         {getFieldDecorator('userEmail', {
                             rules: [{ required: true, message: 'Please input your userEmail!' }],
                         })(
-                            <Input type="email" placeholder="UserEmail" />
+                            <Input type="email" placeholder="UserEmail" className="form-item"/>
                         )}
                         </Form.Item>
                         <Form.Item>
                         {getFieldDecorator('password', {
                             rules: [{ required: true, message: 'Please input your Password!' }],
                         })(
-                            <Input type="password" placeholder="Password" />
+                            <Input type="password" placeholder="Password" className="form-item"/>
                         )}
                         </Form.Item>
                         <Form.Item>
-                        <Button className="login-btn" type="primary" htmlType="submit">
-                            Log in
+                        <Button className="login-btn form-item" type="primary" htmlType="submit">
+                            Log In
                         </Button>
                         </Form.Item>
                     </Form>
@@ -81,19 +64,13 @@ class Login extends React.Component{
             <NavLink to="/login"/>
             <Row>
                 <Col span={24}>
-                    {this.renderHeading()}
+                    <Component.Heading user={this.state.user}/>
                 </Col>
             </Row>
-            <Row>
-                <Col span={24}>
-                    {this.renderGreeting()}
-                </Col>
-            </Row>
-            <Row>
-                <Col offset={8} span={8}>
-                    {this.renderForm()}
-                </Col>
-            </Row>
+            <div className="flex-container">
+                <div className="form">{this.renderForm()}</div> 
+                <div className="content">{this.renderContent()}</div>     
+            </div>
         </div>)
     }
 }
