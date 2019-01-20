@@ -1,9 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Card , Input , Button , Row , Col , Form , Icon } from 'antd';
+import { Card , Input , Button , Row , Col , Form , Layout  } from 'antd';
 
+const { Header , Content , Footer } = Layout;
 
 class Login extends React.Component{
+
+
+    //handle login submit
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -11,44 +15,83 @@ class Login extends React.Component{
             console.log('Received values of form: ', values);
           }
         });
-      }
+    }
+
+
+    //render the heading of the page
+    renderHeading = () => {
+        return(
+            <Card className="heading">ChatApp</Card>
+        )
+    }
+
+    //render the greeting message
+    renderGreeting = () => {
+        let d = new Date();
+        let time = d.getHours();
+        let greeting = ''
+        if(time>=0 && time<12){
+            greeting = 'Morning';
+        }
+        else if(time>=12 &&  time<17)
+        {
+            greeting = 'Afternoon'
+        }
+        else
+        {
+            greeting = 'Evening'
+        }
+        return(
+            <Card bordered={false} className="greeting">Good {greeting} !</Card>
+        )
+    }
+    //render the login form
+    renderForm = () => {
+        const { getFieldDecorator } = this.props.form;       
+        return(<Card className="login-card">
+                    <Form onSubmit={this.handleSubmit} className="login-form">
+                        <Form.Item>
+                        {getFieldDecorator('userEmail', {
+                            rules: [{ required: true, message: 'Please input your userEmail!' }],
+                        })(
+                            <Input type="email" placeholder="UserEmail" />
+                        )}
+                        </Form.Item>
+                        <Form.Item>
+                        {getFieldDecorator('password', {
+                            rules: [{ required: true, message: 'Please input your Password!' }],
+                        })(
+                            <Input type="password" placeholder="Password" />
+                        )}
+                        </Form.Item>
+                        <Form.Item>
+                        <Button className="login-btn" type="primary" htmlType="submit">
+                            Log in
+                        </Button>
+                        </Form.Item>
+                    </Form>
+                </Card>)
+    }
+
+
     render(){
+         
         return(
         <div>
             <NavLink to="/login"/>
-            <Row className="main-row">
-                <Col span={8}>
-                    <Card>
-                        <Form onSubmit={this.handleSubmit} className="login-form">
-                            <Form.Item>
-                            {getFieldDecorator('userName', {
-                                rules: [{ required: true, message: 'Please input your username!' }],
-                            })(
-                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
-                            )}
-                            </Form.Item>
-                            <Form.Item>
-                            {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Please input your Password!' }],
-                            })(
-                                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-                            )}
-                            </Form.Item>
-                            <Form.Item>
-                            {getFieldDecorator('remember', {
-                                valuePropName: 'checked',
-                                initialValue: true,
-                            })(
-                                <Checkbox>Remember me</Checkbox>
-                            )}
-                            <a className="login-form-forgot" href="">Forgot password</a>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
-                                Log in
-                            </Button>
-                            Or <a href="">register now!</a>
-                            </Form.Item>
-                        </Form>
-                    </Card>
+            <Row>
+                <Col span={24}>
+                    {this.renderHeading()}
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                    {this.renderGreeting()}
+                </Col>
+            </Row>
+            <Row>
+                <Col offset={8} span={8}>
+                    {this.renderForm()}
                 </Col>
             </Row>
         </div>)

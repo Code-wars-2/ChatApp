@@ -1,1 +1,14 @@
 @import '~antd/dist/antd.css';
+
+.login-card{
+    padding:30px;
+}
+.login-btn {
+    width:100%;
+}
+.layout{
+    height:100%;
+}
+.heading{
+    font-size: 30px;
+}
