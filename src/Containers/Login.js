@@ -1,24 +1,32 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import * as Component from '../Components/index';
-import { Card , Input , Button , Row , Col , Form } from 'antd';
-import { login } from '../Models/Models'
+import { Card , Input , Button , Row , Col , Form , message } from 'antd';
+import firebase from '../Config/firebase'
+//import { login } from '../Models/Models';
 
 class Login extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            user:'User'
+            user:'User',
+            authenticated:false
         }
     }
-
 
     //handle login submit
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
-            login(values);
+            firebase.auth().signInWithEmailAndPassword(values.userEmail,values.password).then(response =>{
+                this.setState({
+                    authenticated:true
+                })
+            })
+            .catch(error => {
+                message.error(error.message)
+            })
           }
         });
     }
@@ -56,8 +64,10 @@ class Login extends React.Component{
                 </Card>)
     }
 
-
     render(){
+        if(this.state.authenticated){
+            return <Redirect to='/chatscreen'/>
+        }
          
         return(
         <div>
