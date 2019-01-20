@@ -2,8 +2,7 @@ import React from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import * as Component from '../Components/index';
 import { Card , Input , Button , Row , Col , Form , message } from 'antd';
-import firebase from '../Config/firebase'
-//import { login } from '../Models/Models';
+import firebase from '../Config/firebase';
 
 class Login extends React.Component{
     constructor(props){
@@ -74,7 +73,7 @@ class Login extends React.Component{
             <NavLink to="/login"/>
             <Row>
                 <Col span={24}>
-                    <Component.Heading user={this.state.user}/>
+                    <Component.Heading/>
                 </Col>
             </Row>
             <div className="flex-container">
