@@ -4,6 +4,14 @@ import { Card , Input , Button , Row , Col , Form } from 'antd';
 
 
 class Login extends React.Component{
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+          if (!err) {
+            console.log('Received values of form: ', values);
+          }
+        });
+      }
     render(){
         return(
         <div>
@@ -46,4 +54,4 @@ class Login extends React.Component{
         </div>)
     }
 }
-export default Login;
+export default Form.create()(Login);
