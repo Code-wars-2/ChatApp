@@ -10,7 +10,8 @@ class Chatscreen extends React.Component{
         super(props);
         this.state ={
             loading:false,
-            authenticated:true
+            authenticated:true,
+            currentUser:null
         }
     }
     componentDidMount(){
@@ -19,15 +20,19 @@ class Chatscreen extends React.Component{
         })
         firebase.auth().onAuthStateChanged(user => {
             if(user){
+                let name = user.email.split('@');
+                let dname = name[0];
+                name = dname.replace(dname[0],dname[0].toUpperCase())
                 this.setState({
                     authenticated:true,
-                    loading:false
+                    loading:false,
+                    currentUser:name
                 })
             }
             else{
                 this.setState({
                     authenticated:false,
-                    loading:false
+                    loading:false,
                 })
             }
         })
@@ -49,10 +54,10 @@ class Chatscreen extends React.Component{
                 <NavLink to="/chatscreen"/>
                 <Row>
                     <Col span={24}>
-                        <Component.Heading user={this.state.user}/>
+                        <Component.Heading user={this.state.currentUser}/>
                     </Col>
                 </Row>
-                <div><button onClick={()=>this.logout()}>Logout</button></div>
+                <div><button onClick={()=>this.logout()}>Test Logout</button></div>
                 </div>)
         }
         
