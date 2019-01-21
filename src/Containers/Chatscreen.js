@@ -58,12 +58,11 @@ class Chatscreen extends React.Component{
                     </Col>
                 </Row>
                 <div><button onClick={()=>this.logout()}>Test Logout</button></div>
-                <Row>
+                <Row className="text">
                     <Card>
                         <Col span={23}><Input placeholder="Type message here" type="text"/></Col>
                         <Col span={1}><Button type="primary">Send</Button></Col>
-                    </Card>
-                    
+                    </Card> 
                 </Row>
                 </div>)
         }
