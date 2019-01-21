@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink , Redirect } from 'react-router-dom';
-import { Row , Col } from 'antd';
+import { Row , Col , Input , Button } from 'antd';
 import * as Component from '../Components/index';
 import firebase from '../Config/firebase'
 
@@ -58,6 +58,9 @@ class Chatscreen extends React.Component{
                     </Col>
                 </Row>
                 <div><button onClick={()=>this.logout()}>Test Logout</button></div>
+                <Row>
+                    <Col span={20}><Input placeholder="Type message here" type="text"/></Col>
+                </Row>
                 </div>)
         }
         
