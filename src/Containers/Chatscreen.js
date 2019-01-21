@@ -2,8 +2,8 @@ import React from 'react';
 import { NavLink , Redirect } from 'react-router-dom';
 import { Row , Col , Input , Button , Card } from 'antd';
 import * as Component from '../Components/index';
-import firebase from '../Config/firebase'
-
+import firebase from '../Config/firebase';
+import _ from 'lodash';
 
 class Chatscreen extends React.Component{
     constructor(props){
@@ -11,7 +11,9 @@ class Chatscreen extends React.Component{
         this.state ={
             loading:false,
             authenticated:true,
-            currentUser:null
+            currentUser:null,
+            input:'',
+            messages:[]
         }
     }
     componentDidMount(){
@@ -36,7 +38,46 @@ class Chatscreen extends React.Component{
                 })
             }
         })
+        this.showMessages();
     }
+
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    sendMessage = () => {
+        var unix = Math.round(+new Date()/1000);
+        firebase.database().ref('/messages').push
+        ({
+            message:this.state.input+"/"+this.state.currentUser+"/"+unix
+        });
+        this.setState({
+            input:''
+        })
+    }
+
+    showMessages = () => {
+        let app = firebase.database().ref('messages');
+            app.on('value', snapshot => {
+              this.getData(snapshot.val());
+            });
+    }
+        getData = (values) => {
+        let messagesVal = values;
+        let messages = _(messagesVal)
+                          .keys()
+                          .map(messageKey => {
+                              let cloned = _.clone(messagesVal[messageKey]);
+                              cloned.key = messageKey;
+                              return cloned;
+                          })
+                          .value();
+          this.setState({
+            messages: messages
+          });
+      }
 
     logout = () =>{
         firebase.auth().signOut()
@@ -58,13 +99,18 @@ class Chatscreen extends React.Component{
                     </Col>
                 </Row>
                 <div><button onClick={()=>this.logout()}>Test Logout</button></div>
-                <Row className="text">
-                    <Card>
-                        <Col span={23}><Input placeholder="Type message here" type="text"/></Col>
-                        <Col span={1}><Button type="primary">Send</Button></Col>
-                    </Card> 
-                </Row>
-                </div>)
+                <div className="messages">{this.state.messages.map((message) => {
+                    return <div className="message-mine">{message.message}</div>
+                })}</div>
+                <Card className="input-bar">
+                    <div className="wrapper"> 
+                        <Input placeholder="Type message here" className="input-flex-item" onChange={this.handleChange} name='input' value={this.state.input}/>
+                        <Button type="primary" className="btn-flex-item" onClick={()=>this.sendMessage()}>Send</Button>
+                    </div>
+                </Card>
+                
+                </div>
+                )
         }
         
     }

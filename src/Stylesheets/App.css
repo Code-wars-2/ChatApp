@@ -61,7 +61,25 @@
     100% { transform: rotate(360deg); }
 }
 
-.text{
-    position: absolute;
-    
+.input-bar{
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.messages{
+    height:68vh;
+    overflow-y: auto;
+}
+
+.message-mine{
+    padding: 5px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.wrapper {
+    display: flex;
+    flex-basis: 100px;
 }
