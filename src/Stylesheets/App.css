@@ -61,3 +61,7 @@
     100% { transform: rotate(360deg); }
 }
 
+.text{
+    position: absolute;
+    
+}
