@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink , Redirect } from 'react-router-dom';
-import { Row , Col , Input , Button } from 'antd';
+import { Row , Col , Input , Button , Card } from 'antd';
 import * as Component from '../Components/index';
 import firebase from '../Config/firebase'
 
