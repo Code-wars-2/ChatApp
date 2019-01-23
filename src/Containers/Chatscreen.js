@@ -1,9 +1,13 @@
 import React from 'react';
 import { NavLink , Redirect } from 'react-router-dom';
-import { Row , Col , Input , Button , Card } from 'antd';
+import { Row , Col , Input , Button , Card , Icon } from 'antd';
 import * as Component from '../Components/index';
 import firebase from '../Config/firebase';
 import _ from 'lodash';
+import ScrollToBottom from 'react-scroll-to-bottom';
+
+
+
 
 class Chatscreen extends React.Component{
     constructor(props){
@@ -41,6 +45,14 @@ class Chatscreen extends React.Component{
         this.showMessages();
     }
 
+
+
+    handleKeyPress = (event) => {
+        if (event.keyCode == 13 || event.which == 13){
+            return this.sendMessage()      
+        }
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.name]:e.target.value
@@ -55,7 +67,7 @@ class Chatscreen extends React.Component{
         });
         this.setState({
             input:''
-        })
+        })      
     }
 
     showMessages = () => {
@@ -65,6 +77,11 @@ class Chatscreen extends React.Component{
             });
     }
         getData = (values) => {
+        let date = null;
+        let hours = null;
+        let minutes = null; 
+        let textmessage = [];
+        let split = [];
         let messagesVal = values;
         let messages = _(messagesVal)
                           .keys()
@@ -74,14 +91,34 @@ class Chatscreen extends React.Component{
                               return cloned;
                           })
                           .value();
-          this.setState({
-            messages: messages
-          });
+        for(var index in messages){
+            split = messages[index].message.split('/');
+            date = new Date(split[2]*1000);
+            hours = date.getHours();
+            minutes = date.getMinutes();
+            if(hours < 10){
+                hours='0'+hours
+            }
+            if(minutes < 10){
+                minutes='0'+minutes
+            }
+            textmessage.push({
+                message:split[0],
+                user:split[1],
+                hrs:hours,
+                min:minutes,
+                key:index
+            })
+        }
+        this.setState({
+            messages: textmessage
+        });
       }
 
     logout = () =>{
         firebase.auth().signOut()
     }
+
 
     render(){
         if(!this.state.authenticated){
@@ -91,7 +128,7 @@ class Chatscreen extends React.Component{
             return <Component.Loader/>
         }
         else{
-            return(<div>
+            return(<div className="body">
                 <NavLink to="/chatscreen"/>
                 <Row>
                     <Col span={24}>
@@ -99,18 +136,27 @@ class Chatscreen extends React.Component{
                     </Col>
                 </Row>
                 <div><button onClick={()=>this.logout()}>Test Logout</button></div>
-                <div className="messages">{this.state.messages.map((message) => {
-                    return <div className="message-mine">{message.message}</div>
-                })}</div>
-                <Card className="input-bar">
-                    <div className="wrapper"> 
-                        <Input placeholder="Type message here" className="input-flex-item" onChange={this.handleChange} name='input' value={this.state.input}/>
-                        <Button type="primary" className="btn-flex-item" onClick={()=>this.sendMessage()}>Send</Button>
-                    </div>
-                </Card>
-                
+                <ScrollToBottom className="messages" animating={true}>
+                    {this.state.messages.map((message,key) => {
+                        if(message.user!==this.state.currentUser){
+                                return  <div key={key} className="message-from">
+                                    <div className="name">{message.user[0]}</div><div className="texts">{message.message} <span className="time">{message.hrs}:{message.min}<Icon className="tick1" type="check" /><Icon className="tick2" type="check" /></span></div>
+                                </div>
+                        }
+                        else{
+                                return  <div key={key} className="message-own">
+                                    <div className="name">{message.user[0]}</div><div className="texts">{message.message} <span className="time">{message.hrs}:{message.min}<Icon className="tick1" type="check" /><Icon className="tick2" type="check" /></span></div>
+                                </div>
+                        }
+                    }
+                )}
+                </ScrollToBottom>
+                <div className="wrapper"> 
+                        <Input placeholder="Type message here" className="input-flex-item" id="inputtext" onChange={this.handleChange} onKeyPress={this.handleKeyPress} name='input' value={this.state.input}/>
+                        <Button type="primary" className="btn-flex-item" onClick={()=>this.sendMessage()} >Send</Button>
                 </div>
-                )
+            </div>
+            )
         }
         
     }

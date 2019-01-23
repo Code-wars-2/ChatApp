@@ -78,7 +78,7 @@ class Login extends React.Component{
             </Row>
             <div className="flex-container">
                 <div className="form">{this.renderForm()}</div> 
-                <div className="content">{this.renderContent()}</div>     
+                <div className="content"><Component.Content/></div>     
             </div>
         </div>)
     }

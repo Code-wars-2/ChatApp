@@ -1,6 +1,8 @@
 @import '~antd/dist/antd.css';
 
-
+body{
+    background-color: black
+}
 .heading{
     font-size: 30px;
     font-weight: 600;
@@ -18,6 +20,7 @@
     text-align:center;
     padding-top: 30px;
     border:none;
+    background-color: transparent;
 }
 .form{
     flex-grow: 1;
@@ -28,7 +31,14 @@
 .form-item{
     width:100%;
     margin-top: 0px;
+    background-color: transparent;
+    color: #fff;
 }
+.login-btn{
+    background-color: #428bca;
+    color:#fff;
+}
+
 .flex-container{
     display: flex;
 }
@@ -61,25 +71,68 @@
     100% { transform: rotate(360deg); }
 }
 
-.input-bar{
-    position:absolute;
-    bottom: 0;
-    width: 100%;
-}
+
 
 .messages{
-    height:68vh;
+    height:70vh;
     overflow-y: auto;
 }
 
-.message-mine{
+.message-own{
     padding: 5px;
-    text-align: right;
-    font-size: 16px;
-    font-weight: 100;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.message-from{
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.texts{
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 300;
+    word-wrap: break-word;
+    background-color: #428bca;
+    color:#fff;
+}
+
+.name{
+    margin-left: 4px;
+    margin-right: 4px;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 300;
+    background-color: #f44256;
+    color:#fff;
+    text-align: center;
+    height:30px;
+    width:30px;
 }
 
 .wrapper {
     display: flex;
     flex-basis: 100px;
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    padding: 10px;
+    background-color: transparent;
+}
+
+.time{
+    margin-left: 10px;
+}
+
+.tick1{
+    position: relative;
+    margin-left: 2px; 
+}
+.tick2{
+    position:relative;
+    left:-10px;
 }
