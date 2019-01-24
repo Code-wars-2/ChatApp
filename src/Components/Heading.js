@@ -23,7 +23,7 @@ class Heading extends React.Component {
     }
     render(){
         return(
-            <Card className="heading">ChatApp {this.renderGreeting(this.props.user)}</Card>
+            <div className="header"><div className="heading">ChatApp</div></div>
             
         )
     }

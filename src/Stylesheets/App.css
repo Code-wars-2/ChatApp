@@ -1,16 +1,53 @@
 @import '~antd/dist/antd.css';
 
 body{
-    background-color: black
+    background-color: #1e1e1e;
 }
+.header{
+    background-color: #303030;
+    border:none;
+    border-radius:0px;
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+}
+
 .heading{
     font-size: 30px;
     font-weight: 600;
-    background-color: #428bca;
     color:#fff;
-    border:none;
-    border-radius:0px;
+    background-color: transparent;
 }
+
+.Fletter{
+    background-color: transparent;
+    margin-top: -3px;
+    margin-left: -3px;
+}
+
+.logout{
+    background-color: #f44256;
+    color:#fff;
+    border:2px solid #fff;
+    border-radius: 50%;
+    height:40px;
+    width:40px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.logout:hover{
+    background-color:#fff;
+    color:#f44256;
+    border:2px solid #cc2438;
+}
+
+.logout:focus{
+    background-color: #f44256;
+    color:#fff;
+    border:2px solid #cc2438;
+}
+
 .greeting{
     font-size: 15px;
     float: right;
@@ -54,6 +91,26 @@ body{
   }
 
 
+.btn-flex-item{
+    background-color: #f44256;
+    color:#fff;
+    border-color: #fff;
+}
+
+.btn-flex-item:hover{
+    background-color: #fff;
+    color:#f44256;
+    border-color: #f44256;
+}
+
+.btn-flex-item:focus{
+    background-color: #f44256;
+    color:#fff;
+    border-color: #fff;
+}
+
+
+
 .loader {
     position: absolute;
     left:50%;
@@ -71,11 +128,14 @@ body{
     100% { transform: rotate(360deg); }
 }
 
-
-
 .messages{
-    height:70vh;
-    overflow-y: auto;
+    height:80vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
 }
 
 .message-own{
@@ -90,28 +150,37 @@ body{
     flex-direction: row;
 }
 
+
 .texts{
     padding: 5px;
     border-radius: 5px;
     font-size: 15px;
     font-weight: 300;
     word-wrap: break-word;
-    background-color: #428bca;
+    background-color: #f44256;
     color:#fff;
 }
+
 
 .name{
     margin-left: 4px;
     margin-right: 4px;
     padding: 5px;
     border-radius: 50%;
-    font-size: 13px;
-    font-weight: 300;
-    background-color: #f44256;
+    font-size: 15px;
+    font-weight: 700;
+    background-color:#f44256;
     color:#fff;
     text-align: center;
     height:30px;
     width:30px;
+    border:2px solid #fff;   
+}
+
+.name-text{
+    background-color: transparent;
+    margin-top: -4px;
+    margin-left: -1px;
 }
 
 .wrapper {
@@ -135,4 +204,13 @@ body{
 .tick2{
     position:relative;
     left:-10px;
+}
+
+.sync{
+    animation: spin 1s linear infinite;
+    font-size: 30px;
+    color:#fff;
+    position: absolute;
+    top:50%;
+    left:50%;
 }
