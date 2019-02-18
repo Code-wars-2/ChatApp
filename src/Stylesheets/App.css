@@ -131,7 +131,6 @@ body{
 .messages{
     height:80vh;
     overflow-x: hidden;
-    overflow-y: scroll;
 }
 
 .messages::-webkit-scrollbar {

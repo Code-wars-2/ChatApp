@@ -110,6 +110,7 @@ class Chatscreen extends React.Component{
             if(minutes < 10){
                 minutes='0'+minutes
             }
+
                 textmessage.push({
                 message:split[0],
                 user:split[1],
@@ -118,6 +119,10 @@ class Chatscreen extends React.Component{
                 key:index,
                 heart:split[3]
                 })
+
+            if(messages.length>20){
+                textmessage.splice(0, textmessage.length - 20)
+            }
             
         }
         this.setState({
@@ -134,7 +139,6 @@ class Chatscreen extends React.Component{
             return (<div className="outer-message">
                     <ScrollToBottom className="messages" animating={true}>
                     {this.state.messages.map((message,key) => {
-                        console.log(message)
                         if(message.user!==this.state.currentUser){
                             if(message.heart==='true'){
                                 return <div key={key} className="message-from">
@@ -172,7 +176,7 @@ class Chatscreen extends React.Component{
 
     render(){
         if(!this.state.authenticated){
-            return <Redirect to="/login"/>
+            return <Redirect to="/"/>
         }
             return(<div className="body">
                 <NavLink to="/chatscreen"/>

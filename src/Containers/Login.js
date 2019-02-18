@@ -70,7 +70,7 @@ class Login extends React.Component{
          
         return(
         <div>
-            <NavLink to="/login"/>
+            <NavLink to="/"/>
             <Row>
                 <Col span={24}>
                     <Component.Heading/>

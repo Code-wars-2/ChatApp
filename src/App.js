@@ -8,7 +8,7 @@ class App extends Component {
       <div>
           <Router>
             <Switch>
-              <Route exact path="/login" component={Container.Login}/>
+              <Route exact path="/" component={Container.Login}/>
               <Route exact path="/chatscreen" component={Container.Chatscreen}/>
             </Switch>
           </Router>
